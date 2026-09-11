@@ -1,10 +1,10 @@
-# 🧠 Personalized DSA Learning & Concept Diagnosis Platform (V1 MVP)
+  Personalized DSA Learning
 
-> **An ML-powered, graph-based personalized Data Structures & Algorithms learning platform that models relationships between coding problems, analyzes user solving behavior to infer latent conceptual weaknesses, and generates targeted practice sequences to build genuine problem-solving and concept transfer ability.**
+> **A graph-based personalized Data Structures & Algorithms learning platform that models relationships between coding problems, analyzes user solving behavior to infer latent conceptual weaknesses, and generates targeted practice sequences to build genuine problem-solving and concept transfer ability.**
 
 ---
 
-## 🌟 The Core Problem
+##  The Core Problem
 
 Standard platforms like LeetCode track **problem completion** (`Solved / Unsolved`). However, this leads to a fundamental learning flaw:
 
@@ -17,44 +17,44 @@ This platform treats DSA problems as a **Unified Knowledge Graph**. By analyzing
 
 ---
 
-## ✨ Key Features (Version 1 MVP)
+##  Key Features
 
-### 1. 🕸️ Pre-Populated NeetCode 150 Knowledge Graph
+### 1.  Pre-Populated NeetCode 150 Knowledge Graph
 - **150 Benchmark Problems** across 18 core topics.
 - **27 Latent Reasoning Concepts** (e.g., *Sliding Window Invariant & Shrink Condition*, *DP State Definition*, *Monotonic Stack Boundary*, *BST Range Validation*, *Bitwise XOR Cancellation*).
 - **Multi-Layer Edges**: Concept requirements, prerequisite flows, similarity links, and topic memberships.
 
-### 2. 🔮 Interactive Knowledge Graph Explorer
+### 2.  Interactive Knowledge Graph Explorer
 - **Vis.js 2D Network Canvas**: Drag, zoom, and inspect nodes in real time.
 - **Heatmap Mode**: Dynamic neon red/amber glow highlighting flagged concept weaknesses and high-density failure clusters.
 - **Topic Sub-network Isolator**: Filter nodes by specific topics (*Arrays & Hashing*, *Sliding Window*, *Dynamic Programming*, etc.) to inspect focused sub-networks without text clutter.
 - **Toggleable Edge Labels**: Clean visualization with color-coded edge styles (Dashed purple = Concept req, Amber arrow = Prerequisite flow).
 
-### 3. 📝 Self-Reported Attempt & Behavior Tracker
+### 3.  Self-Reported Attempt & Behavior Tracker
 - Rich attempt logging drawer capturing:
   - **Outcome Status**: `Solved Independently`, `Solved with Hint`, `Solved after Solution View`, `Memorized Approach`, `Failed/Stuck`.
   - **Behavioral Metrics**: Time spent (mins), perceived difficulty rating (`Easy`, `Fair`, `Challenging`, `Overwhelming`).
   - **Assistance Flags**: Hint used, solution viewed, or memorization felt.
   - **Failure Point Checklist**: *"Couldn't identify initial pattern"*, *"Struggled with state formulation"*, *"Boundary condition bug"*.
 
-### 4. 🧪 Latent Diagnosis & Heuristic Knowledge Tracing Engine
+### 4.  Latent Diagnosis & Heuristic Knowledge Tracing Engine
 - **Mastery Score Calculation**: Computes concept mastery percentages \(M(c) \in [0, 100\%]\) using weighted outcome scoring that penalizes solution-viewing and memorization reliance.
 - **Diagnostic Insights**: Automatically generates natural language diagnostic reports detailing the exact source of difficulty.
 
-### 5. 🎯 Targeted 4-Step Remediation & Transfer Sequence
+### 5. Targeted 4-Step Remediation & Transfer Sequence
 Generates personalized 4-step practice plans targeting diagnosed weaknesses:
 1. **Step 1: Conceptual Primer**: Core reasoning invariants, trigger conditions, and common pitfalls.
 2. **Step 2: Warm-up Baseline Practice**: Accessible problem directly testing the concept.
 3. **Step 3: Target Problem Remediation**: Re-tackling the previous failure point.
 4. **Step 4: Unseen Concept Transfer Test**: Solving an unseen problem sharing the identical concept node to verify genuine concept transfer.
 
-### 6. 📊 Algorithmic Difficulty Fingerprint Dashboard
+### 6. Algorithmic Difficulty Fingerprint Dashboard
 - Visual breakdown of mastery across Topics, Patterns, and Concepts.
 - Top metrics: Total Attempts, Independent Solves %, Weak Concepts Count, and Concept Transfer Readiness Score.
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Layer | Technology |
 | :--- | :--- |
@@ -66,7 +66,7 @@ Generates personalized 4-step practice plans targeting diagnosed weaknesses:
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 DSA_Personaliser/
@@ -96,7 +96,7 @@ DSA_Personaliser/
 
 ---
 
-## 🚀 Getting Started & Local Execution
+##  Getting Started & Local Execution
 
 ### Prerequisites
 - Node.js (v18+)
@@ -129,14 +129,6 @@ Run the full stack with a single command from the project root:
 npm run dev
 ```
 
-This starts:
-- 🟢 **Backend API Server**: `http://localhost:5001`
-- 🔵 **Frontend Web App**: `http://localhost:5173`
-
-Open **[http://localhost:5173](http://localhost:5173)** in your browser!
-
----
-
 ## 🔌 API Endpoints Summary
 
 | Method | Endpoint | Description |
@@ -153,15 +145,3 @@ Open **[http://localhost:5173](http://localhost:5173)** in your browser!
 
 ---
 
-## 🛣️ Roadmap for Future Versions (V2+)
-
-- [ ] **GNN Knowledge Tracing**: Replace heuristic scoring with Graph Neural Networks / Deep Knowledge Tracing.
-- [ ] **Online Code Judge**: Integrate Monaco Editor & Judge0 code execution runner.
-- [ ] **Automated Problem Tagging**: LLM-assisted extraction of reasoning concepts for non-NeetCode problems.
-- [ ] **Spaced Repetition Schedule**: SM-2 spaced repetition notifications for concepts requiring transfer review.
-
----
-
-## 📜 License
-
-ISC License. Built as an intelligent DSA learning & diagnostic system.
