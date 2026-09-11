@@ -1,4 +1,4 @@
-### Personalized DSA Learning
+# Personalized DSA Learning
 
 > **A graph-based personalized Data Structures & Algorithms learning platform that models relationships between coding problems, analyzes user solving behavior to infer latent conceptual weaknesses, and generates targeted practice sequences to build genuine problem-solving and concept transfer ability.**
 
