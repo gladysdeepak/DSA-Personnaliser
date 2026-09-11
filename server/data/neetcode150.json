@@ -1,0 +1,1521 @@
+{
+  "concepts": [
+    {
+      "id": "hash_frequency_map",
+      "title": "Hash Frequency Mapping & Collision Handling",
+      "category": "Arrays & Hashing",
+      "description": "Using hash tables to achieve O(1) average lookup for element frequencies, duplicates, and complement matching."
+    },
+    {
+      "id": "prefix_sum_invariant",
+      "title": "Prefix Sum & Subarray Invariant",
+      "category": "Arrays & Hashing",
+      "description": "Transforming range queries and contiguous subarray problems into constant-time prefix sum difference checks."
+    },
+    {
+      "id": "two_pointer_opposite",
+      "title": "Two Pointers Convergence & Monotonicity",
+      "category": "Two Pointers",
+      "description": "Exploiting sorted arrays or structural bounds to move left and right pointers inward based on monotonic conditions."
+    },
+    {
+      "id": "two_pointer_fast_slow",
+      "title": "Fast & Slow Pointer Cycle Detection",
+      "category": "Two Pointers / Linked List",
+      "description": "Floyd's Tortoise and Hare algorithm for detecting cycles and finding middle nodes without extra space."
+    },
+    {
+      "id": "sliding_window_invariant",
+      "title": "Sliding Window Invariant & Shrink Condition",
+      "category": "Sliding Window",
+      "description": "Maintaining a dynamic contiguous subarray window and dynamically shrinking the left boundary when invalid invariants occur."
+    },
+    {
+      "id": "sliding_window_fixed",
+      "title": "Fixed-Size Window Rolling Computation",
+      "category": "Sliding Window",
+      "description": "Rolling a fixed-length window across array/string by adding incoming element and removing outgoing element in O(1)."
+    },
+    {
+      "id": "monotonic_stack_boundary",
+      "title": "Monotonic Stack Next Greater/Smaller Boundary",
+      "category": "Stack",
+      "description": "Maintaining a monotonic increasing/decreasing stack to identify contiguous span boundaries and next/previous greater/smaller elements."
+    },
+    {
+      "id": "stack_matching_invariant",
+      "title": "Stack Parenthesis & Expression Invariant",
+      "category": "Stack",
+      "description": "Using LIFO stack ordering to enforce nested structure matching, operator precedence, and undo state evaluation."
+    },
+    {
+      "id": "binary_search_monotonicity",
+      "title": "Binary Search Monotonic Search Space Mapping",
+      "category": "Binary Search",
+      "description": "Halving search space by evaluating monotonic predicate functions, including searching on answer ranges."
+    },
+    {
+      "id": "binary_search_rotated",
+      "title": "Rotated Sorted Array Pivot Isolation",
+      "category": "Binary Search",
+      "description": "Identifying sorted halves in rotated arrays to decide left vs right search space reduction."
+    },
+    {
+      "id": "linked_list_pointer_manipulation",
+      "title": "Linked List In-Place Pointer Manipulation",
+      "category": "Linked List",
+      "description": "Direct pointer assignment, dummy head nodes, and multi-pointer swaps without allocating extra list nodes."
+    },
+    {
+      "id": "tree_recursion_state",
+      "title": "Tree Post-Order State Passing & Depth Invariant",
+      "category": "Trees",
+      "description": "Bubbling up sub-tree heights, diameters, or validity flags in post-order traversal to combine child states into parent decisions."
+    },
+    {
+      "id": "bst_property_validation",
+      "title": "BST Range Constraint Validation",
+      "category": "Trees",
+      "description": "Propagating min/max value bounds down binary search trees to validate structural search properties."
+    },
+    {
+      "id": "trie_prefix_matching",
+      "title": "Trie Prefix Tree Traversal & Word Boundary",
+      "category": "Tries",
+      "description": "Character-by-character tree navigation for prefix lookup, autocomplete, and wild-card pattern matching."
+    },
+    {
+      "id": "heap_top_k_tracking",
+      "title": "Heap Top-K Element Tracking & Dynamic Rebalancing",
+      "category": "Heap / Priority Queue",
+      "description": "Maintaining min/max heaps of size K to continuously track k-th extremums or dual-heap median balancing."
+    },
+    {
+      "id": "backtracking_state_pruning",
+      "title": "Backtracking Choice Space & Pruning Invariant",
+      "category": "Backtracking",
+      "description": "Systematic search tree exploration with append, recurse, and pop backtrack steps, pruned by constraint checks."
+    },
+    {
+      "id": "graph_dfs_cycle_detection",
+      "title": "Graph DFS Cycle Detection & State Marking",
+      "category": "Graphs",
+      "description": "3-state coloring (unvisited, visiting, visited) during depth-first traversal to catch back-edges and directed cycles."
+    },
+    {
+      "id": "graph_bfs_shortest_path",
+      "title": "Graph BFS Unweighted Shortest Path & Level Order",
+      "category": "Graphs",
+      "description": "Queue-driven level-by-level traversal guaranteeing minimal edge count distance in unweighted graphs or grids."
+    },
+    {
+      "id": "union_find_connected_components",
+      "title": "Union-Find Disjoint Set Path Compression",
+      "category": "Advanced Graphs",
+      "description": "Near constant time dynamic connectivity tracking using parent array pointers, rank optimization, and path compression."
+    },
+    {
+      "id": "topological_sort_indegree",
+      "title": "Topological Sort Indegree Reduction (Kahn's Algo)",
+      "category": "Advanced Graphs",
+      "description": "Processing zero-indegree nodes sequentially in DAGs to compute linear execution ordering and dependency resolution."
+    },
+    {
+      "id": "dp_state_definition",
+      "title": "DP State Definition & Dimension Allocation",
+      "category": "1D/2D Dynamic Programming",
+      "description": "Defining optimal subproblem state representations (e.g. dp[i], dp[i][j]) that satisfy the Bellman optimality principle."
+    },
+    {
+      "id": "dp_state_transition",
+      "title": "DP Recurrence Formulation & Transition Logic",
+      "category": "1D/2D Dynamic Programming",
+      "description": "Formulating exact mathematical transitions between subproblem states based on decisions made at step i."
+    },
+    {
+      "id": "dp_overlapping_subproblems",
+      "title": "Recognizing Overlapping Subproblems & Memoization",
+      "category": "1D/2D Dynamic Programming",
+      "description": "Caching recursive calls or tabulating sub-computations to eliminate exponential re-computation of subtrees."
+    },
+    {
+      "id": "greedy_choice_property",
+      "title": "Greedy Choice Local Optimality & Exchange Proof",
+      "category": "Greedy",
+      "description": "Making locally optimal choices at each step that provably lead to globally optimal solutions without backtracking."
+    },
+    {
+      "id": "interval_overlap_sorting",
+      "title": "Interval Sorting by Start/End & Overlap Invariant",
+      "category": "Intervals",
+      "description": "Sorting interval tuples by start/end coordinates to sequentially resolve merges, insertions, and overlaps."
+    },
+    {
+      "id": "bit_manipulation_xor",
+      "title": "Bitwise XOR Cancellation & Mask Manipulation",
+      "category": "Bit Manipulation",
+      "description": "Using XOR properties (x ^ x = 0, x ^ 0 = x), bitwise AND/OR masks, and bit shifting for O(1) space operations."
+    },
+    {
+      "id": "matrix_in_place_transform",
+      "title": "Matrix In-Place Rotation & Boundary Simulation",
+      "category": "Math & Geometry",
+      "description": "Simulating matrix operations (rotation, spiral traversal, zeroing) using 2D coordinate transformation invariants."
+    }
+  ],
+  "problems": [
+    {
+      "id": "nc-1",
+      "title": "Contains Duplicate",
+      "leetcode_url": "https://leetcode.com/problems/contains-duplicate/",
+      "difficulty": "Easy",
+      "topic": "Arrays & Hashing",
+      "pattern": "Hash Frequency Mapping",
+      "concepts": ["hash_frequency_map"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-2", "nc-3"]
+    },
+    {
+      "id": "nc-2",
+      "title": "Valid Anagram",
+      "leetcode_url": "https://leetcode.com/problems/valid-anagram/",
+      "difficulty": "Easy",
+      "topic": "Arrays & Hashing",
+      "pattern": "Hash Frequency Mapping",
+      "concepts": ["hash_frequency_map"],
+      "prerequisite_ids": ["nc-1"],
+      "similar_ids": ["nc-4"]
+    },
+    {
+      "id": "nc-3",
+      "title": "Two Sum",
+      "leetcode_url": "https://leetcode.com/problems/two-sum/",
+      "difficulty": "Easy",
+      "topic": "Arrays & Hashing",
+      "pattern": "Hash Map Complement Lookup",
+      "concepts": ["hash_frequency_map"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-10", "nc-11"]
+    },
+    {
+      "id": "nc-4",
+      "title": "Group Anagrams",
+      "leetcode_url": "https://leetcode.com/problems/group-anagrams/",
+      "difficulty": "Medium",
+      "topic": "Arrays & Hashing",
+      "pattern": "Categorized Hash Key Encoding",
+      "concepts": ["hash_frequency_map"],
+      "prerequisite_ids": ["nc-2"],
+      "similar_ids": ["nc-5"]
+    },
+    {
+      "id": "nc-5",
+      "title": "Top K Frequent Elements",
+      "leetcode_url": "https://leetcode.com/problems/top-k-frequent-elements/",
+      "difficulty": "Medium",
+      "topic": "Arrays & Hashing",
+      "pattern": "Bucket Sort / Min-Heap Top-K",
+      "concepts": ["hash_frequency_map", "heap_top_k_tracking"],
+      "prerequisite_ids": ["nc-1"],
+      "similar_ids": ["nc-54"]
+    },
+    {
+      "id": "nc-6",
+      "title": "Product of Array Except Self",
+      "leetcode_url": "https://leetcode.com/problems/product-of-array-except-self/",
+      "difficulty": "Medium",
+      "topic": "Arrays & Hashing",
+      "pattern": "Prefix & Suffix Accumulation",
+      "concepts": ["prefix_sum_invariant"],
+      "prerequisite_ids": ["nc-3"],
+      "similar_ids": ["nc-7"]
+    },
+    {
+      "id": "nc-7",
+      "title": "Valid Sudoku",
+      "leetcode_url": "https://leetcode.com/problems/valid-sudoku/",
+      "difficulty": "Medium",
+      "topic": "Arrays & Hashing",
+      "pattern": "HashSet Grid Coordinate Encoding",
+      "concepts": ["hash_frequency_map", "matrix_in_place_transform"],
+      "prerequisite_ids": ["nc-1"],
+      "similar_ids": ["nc-8"]
+    },
+    {
+      "id": "nc-8",
+      "title": "Encode and Decode Strings",
+      "leetcode_url": "https://leetcode.com/problems/encode-and-decode-strings/",
+      "difficulty": "Medium",
+      "topic": "Arrays & Hashing",
+      "pattern": "Length Prefix Delimiter Formatting",
+      "concepts": ["hash_frequency_map"],
+      "prerequisite_ids": [],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-9",
+      "title": "Longest Consecutive Sequence",
+      "leetcode_url": "https://leetcode.com/problems/longest-consecutive-sequence/",
+      "difficulty": "Medium",
+      "topic": "Arrays & Hashing",
+      "pattern": "HashSet Sequence Boundary Probing",
+      "concepts": ["hash_frequency_map"],
+      "prerequisite_ids": ["nc-1"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-10",
+      "title": "Valid Palindrome",
+      "leetcode_url": "https://leetcode.com/problems/valid-palindrome/",
+      "difficulty": "Easy",
+      "topic": "Two Pointers",
+      "pattern": "Two Pointers - Opposite Ends",
+      "concepts": ["two_pointer_opposite"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-11"]
+    },
+    {
+      "id": "nc-11",
+      "title": "Two Sum II Input Array Is Sorted",
+      "leetcode_url": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
+      "difficulty": "Medium",
+      "topic": "Two Pointers",
+      "pattern": "Two Pointers - Opposite Ends",
+      "concepts": ["two_pointer_opposite"],
+      "prerequisite_ids": ["nc-3", "nc-10"],
+      "similar_ids": ["nc-12"]
+    },
+    {
+      "id": "nc-12",
+      "title": "3Sum",
+      "leetcode_url": "https://leetcode.com/problems/3sum/",
+      "difficulty": "Medium",
+      "topic": "Two Pointers",
+      "pattern": "Sorting + Two Pointers",
+      "concepts": ["two_pointer_opposite"],
+      "prerequisite_ids": ["nc-11"],
+      "similar_ids": ["nc-13"]
+    },
+    {
+      "id": "nc-13",
+      "title": "Container With Most Water",
+      "leetcode_url": "https://leetcode.com/problems/container-with-most-water/",
+      "difficulty": "Medium",
+      "topic": "Two Pointers",
+      "pattern": "Greedy Shrinking Two Pointers",
+      "concepts": ["two_pointer_opposite", "greedy_choice_property"],
+      "prerequisite_ids": ["nc-10"],
+      "similar_ids": ["nc-14"]
+    },
+    {
+      "id": "nc-14",
+      "title": "Trapping Rain Water",
+      "leetcode_url": "https://leetcode.com/problems/trapping-rain-water/",
+      "difficulty": "Hard",
+      "topic": "Two Pointers",
+      "pattern": "Max Left/Right Boundary Monotonicity",
+      "concepts": ["two_pointer_opposite", "monotonic_stack_boundary"],
+      "prerequisite_ids": ["nc-13"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-15",
+      "title": "Best Time to Buy and Sell Stock",
+      "leetcode_url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+      "difficulty": "Easy",
+      "topic": "Sliding Window",
+      "pattern": "Dynamic Minimum Tracking Window",
+      "concepts": ["sliding_window_fixed", "greedy_choice_property"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-16"]
+    },
+    {
+      "id": "nc-16",
+      "title": "Longest Substring Without Repeating Characters",
+      "leetcode_url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+      "difficulty": "Medium",
+      "topic": "Sliding Window",
+      "pattern": "Dynamic Window Left Shrink",
+      "concepts": ["sliding_window_invariant", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-15"],
+      "similar_ids": ["nc-17", "nc-19"]
+    },
+    {
+      "id": "nc-17",
+      "title": "Longest Repeating Character Replacement",
+      "leetcode_url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
+      "difficulty": "Medium",
+      "topic": "Sliding Window",
+      "pattern": "Dynamic Window Max Frequency Invariant",
+      "concepts": ["sliding_window_invariant", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-16"],
+      "similar_ids": ["nc-18"]
+    },
+    {
+      "id": "nc-18",
+      "title": "Permutation in String",
+      "leetcode_url": "https://leetcode.com/problems/permutation-in-string/",
+      "difficulty": "Medium",
+      "topic": "Sliding Window",
+      "pattern": "Fixed-Size Window Match Count",
+      "concepts": ["sliding_window_fixed", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-2", "nc-16"],
+      "similar_ids": ["nc-19"]
+    },
+    {
+      "id": "nc-19",
+      "title": "Minimum Window Substring",
+      "leetcode_url": "https://leetcode.com/problems/minimum-window-substring/",
+      "difficulty": "Hard",
+      "topic": "Sliding Window",
+      "pattern": "Dynamic Window Invariant & Map Requirement",
+      "concepts": ["sliding_window_invariant", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-16", "nc-18"],
+      "similar_ids": ["nc-20"]
+    },
+    {
+      "id": "nc-20",
+      "title": "Sliding Window Maximum",
+      "leetcode_url": "https://leetcode.com/problems/sliding-window-maximum/",
+      "difficulty": "Hard",
+      "topic": "Sliding Window",
+      "pattern": "Fixed Window + Monotonic Deque",
+      "concepts": ["sliding_window_fixed", "monotonic_stack_boundary"],
+      "prerequisite_ids": ["nc-19"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-21",
+      "title": "Valid Parentheses",
+      "leetcode_url": "https://leetcode.com/problems/valid-parentheses/",
+      "difficulty": "Easy",
+      "topic": "Stack",
+      "pattern": "LIFO Parenthesis Stack Matching",
+      "concepts": ["stack_matching_invariant"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-22"]
+    },
+    {
+      "id": "nc-22",
+      "title": "Min Stack",
+      "leetcode_url": "https://leetcode.com/problems/min-stack/",
+      "difficulty": "Medium",
+      "topic": "Stack",
+      "pattern": "Auxiliary Min State Stack",
+      "concepts": ["stack_matching_invariant"],
+      "prerequisite_ids": ["nc-21"],
+      "similar_ids": ["nc-23"]
+    },
+    {
+      "id": "nc-23",
+      "title": "Evaluate Reverse Polish Notation",
+      "leetcode_url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+      "difficulty": "Medium",
+      "topic": "Stack",
+      "pattern": "Postfix Expression Evaluation",
+      "concepts": ["stack_matching_invariant"],
+      "prerequisite_ids": ["nc-21"],
+      "similar_ids": ["nc-24"]
+    },
+    {
+      "id": "nc-24",
+      "title": "Generate Parentheses",
+      "leetcode_url": "https://leetcode.com/problems/generate-parentheses/",
+      "difficulty": "Medium",
+      "topic": "Stack",
+      "pattern": "Backtracking Count Invariant",
+      "concepts": ["stack_matching_invariant", "backtracking_state_pruning"],
+      "prerequisite_ids": ["nc-21"],
+      "similar_ids": ["nc-25"]
+    },
+    {
+      "id": "nc-25",
+      "title": "Daily Temperatures",
+      "leetcode_url": "https://leetcode.com/problems/daily-temperatures/",
+      "difficulty": "Medium",
+      "topic": "Stack",
+      "pattern": "Monotonic Decreasing Stack",
+      "concepts": ["monotonic_stack_boundary"],
+      "prerequisite_ids": ["nc-21"],
+      "similar_ids": ["nc-26"]
+    },
+    {
+      "id": "nc-26",
+      "title": "Car Fleet",
+      "leetcode_url": "https://leetcode.com/problems/car-fleet/",
+      "difficulty": "Medium",
+      "topic": "Stack",
+      "pattern": "Sorted Position + Time Stack Bottleneck",
+      "concepts": ["monotonic_stack_boundary"],
+      "prerequisite_ids": ["nc-25"],
+      "similar_ids": ["nc-27"]
+    },
+    {
+      "id": "nc-27",
+      "title": "Largest Rectangle in Histogram",
+      "leetcode_url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
+      "difficulty": "Hard",
+      "topic": "Stack",
+      "pattern": "Monotonic Stack Span Width Calculation",
+      "concepts": ["monotonic_stack_boundary"],
+      "prerequisite_ids": ["nc-25"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-28",
+      "title": "Binary Search",
+      "leetcode_url": "https://leetcode.com/problems/binary-search/",
+      "difficulty": "Easy",
+      "topic": "Binary Search",
+      "pattern": "Standard Low/High Mid Pointer Halving",
+      "concepts": ["binary_search_monotonicity"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-29"]
+    },
+    {
+      "id": "nc-29",
+      "title": "Search a 2D Matrix",
+      "leetcode_url": "https://leetcode.com/problems/search-a-2d-matrix/",
+      "difficulty": "Medium",
+      "topic": "Binary Search",
+      "pattern": "Flattened 2D Index Mapping",
+      "concepts": ["binary_search_monotonicity"],
+      "prerequisite_ids": ["nc-28"],
+      "similar_ids": ["nc-30"]
+    },
+    {
+      "id": "nc-30",
+      "title": "Koko Eating Bananas",
+      "leetcode_url": "https://leetcode.com/problems/koko-eating-bananas/",
+      "difficulty": "Medium",
+      "topic": "Binary Search",
+      "pattern": "Binary Search on Answer Range",
+      "concepts": ["binary_search_monotonicity", "greedy_choice_property"],
+      "prerequisite_ids": ["nc-28"],
+      "similar_ids": ["nc-31"]
+    },
+    {
+      "id": "nc-31",
+      "title": "Find Minimum in Rotated Sorted Array",
+      "leetcode_url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
+      "difficulty": "Medium",
+      "topic": "Binary Search",
+      "pattern": "Pivot Partition Mid Check",
+      "concepts": ["binary_search_rotated"],
+      "prerequisite_ids": ["nc-28"],
+      "similar_ids": ["nc-32"]
+    },
+    {
+      "id": "nc-32",
+      "title": "Search in Rotated Sorted Array",
+      "leetcode_url": "https://leetcode.com/problems/search-in-rotated-sorted-array/",
+      "difficulty": "Medium",
+      "topic": "Binary Search",
+      "pattern": "Sorted Half Determination",
+      "concepts": ["binary_search_rotated"],
+      "prerequisite_ids": ["nc-31"],
+      "similar_ids": ["nc-33"]
+    },
+    {
+      "id": "nc-33",
+      "title": "Time Based Key-Value Store",
+      "leetcode_url": "https://leetcode.com/problems/time-based-key-value-store/",
+      "difficulty": "Medium",
+      "topic": "Binary Search",
+      "pattern": "Timestamp Upper Bound Binary Search",
+      "concepts": ["binary_search_monotonicity", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-28", "nc-3"],
+      "similar_ids": ["nc-34"]
+    },
+    {
+      "id": "nc-34",
+      "title": "Median of Two Sorted Arrays",
+      "leetcode_url": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
+      "difficulty": "Hard",
+      "topic": "Binary Search",
+      "pattern": "Partition Boundary Binary Search",
+      "concepts": ["binary_search_monotonicity"],
+      "prerequisite_ids": ["nc-28"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-35",
+      "title": "Reverse Linked List",
+      "leetcode_url": "https://leetcode.com/problems/reverse-linked-list/",
+      "difficulty": "Easy",
+      "topic": "Linked List",
+      "pattern": "Three-Pointer Iterative Reversal",
+      "concepts": ["linked_list_pointer_manipulation"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-36"]
+    },
+    {
+      "id": "nc-36",
+      "title": "Merge Two Sorted Lists",
+      "leetcode_url": "https://leetcode.com/problems/merge-two-sorted-lists/",
+      "difficulty": "Easy",
+      "topic": "Linked List",
+      "pattern": "Dummy Head Pointer Interleaving",
+      "concepts": ["linked_list_pointer_manipulation"],
+      "prerequisite_ids": ["nc-35"],
+      "similar_ids": ["nc-37"]
+    },
+    {
+      "id": "nc-37",
+      "title": "Reorder List",
+      "leetcode_url": "https://leetcode.com/problems/reorder-list/",
+      "difficulty": "Medium",
+      "topic": "Linked List",
+      "pattern": "Find Mid + Reverse Second Half + Interleave",
+      "concepts": ["linked_list_pointer_manipulation", "two_pointer_fast_slow"],
+      "prerequisite_ids": ["nc-35", "nc-36"],
+      "similar_ids": ["nc-38"]
+    },
+    {
+      "id": "nc-38",
+      "title": "Remove Nth Node From End of List",
+      "leetcode_url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+      "difficulty": "Medium",
+      "topic": "Linked List",
+      "pattern": "Fixed Gap Two Pointers",
+      "concepts": ["linked_list_pointer_manipulation"],
+      "prerequisite_ids": ["nc-35"],
+      "similar_ids": ["nc-39"]
+    },
+    {
+      "id": "nc-39",
+      "title": "Copy List with Random Pointer",
+      "leetcode_url": "https://leetcode.com/problems/copy-list-with-random-pointer/",
+      "difficulty": "Medium",
+      "topic": "Linked List",
+      "pattern": "HashMap Node Clone Mapping",
+      "concepts": ["linked_list_pointer_manipulation", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-35"],
+      "similar_ids": ["nc-40"]
+    },
+    {
+      "id": "nc-40",
+      "title": "Add Two Numbers",
+      "leetcode_url": "https://leetcode.com/problems/add-two-numbers/",
+      "difficulty": "Medium",
+      "topic": "Linked List",
+      "pattern": "Elementary Addition Carry Propagation",
+      "concepts": ["linked_list_pointer_manipulation"],
+      "prerequisite_ids": ["nc-36"],
+      "similar_ids": ["nc-41"]
+    },
+    {
+      "id": "nc-41",
+      "title": "Linked List Cycle",
+      "leetcode_url": "https://leetcode.com/problems/linked-list-cycle/",
+      "difficulty": "Easy",
+      "topic": "Linked List",
+      "pattern": "Floyd Tortoise & Hare Cycle Detection",
+      "concepts": ["two_pointer_fast_slow", "linked_list_pointer_manipulation"],
+      "prerequisite_ids": ["nc-35"],
+      "similar_ids": ["nc-42"]
+    },
+    {
+      "id": "nc-42",
+      "title": "Find the Duplicate Number",
+      "leetcode_url": "https://leetcode.com/problems/find-the-duplicate-number/",
+      "difficulty": "Medium",
+      "topic": "Linked List",
+      "pattern": "Array Value Array Pointer Cycle",
+      "concepts": ["two_pointer_fast_slow"],
+      "prerequisite_ids": ["nc-41"],
+      "similar_ids": ["nc-43"]
+    },
+    {
+      "id": "nc-43",
+      "title": "LRU Cache",
+      "leetcode_url": "https://leetcode.com/problems/lru-cache/",
+      "difficulty": "Medium",
+      "topic": "Linked List",
+      "pattern": "Doubly Linked List + HashMap Hash Map Node Guard",
+      "concepts": ["linked_list_pointer_manipulation", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-35", "nc-3"],
+      "similar_ids": ["nc-44"]
+    },
+    {
+      "id": "nc-44",
+      "title": "Merge k Sorted Lists",
+      "leetcode_url": "https://leetcode.com/problems/merge-k-sorted-lists/",
+      "difficulty": "Hard",
+      "topic": "Linked List",
+      "pattern": "Min-Heap Node Pointer Merge",
+      "concepts": ["linked_list_pointer_manipulation", "heap_top_k_tracking"],
+      "prerequisite_ids": ["nc-36", "nc-54"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-45",
+      "title": "Invert Binary Tree",
+      "leetcode_url": "https://leetcode.com/problems/invert-binary-tree/",
+      "difficulty": "Easy",
+      "topic": "Trees",
+      "pattern": "Recursive Child Pointer Swap",
+      "concepts": ["tree_recursion_state"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-46"]
+    },
+    {
+      "id": "nc-46",
+      "title": "Maximum Depth of Binary Tree",
+      "leetcode_url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+      "difficulty": "Easy",
+      "topic": "Trees",
+      "pattern": "Post-Order Height Accumulation",
+      "concepts": ["tree_recursion_state"],
+      "prerequisite_ids": ["nc-45"],
+      "similar_ids": ["nc-47"]
+    },
+    {
+      "id": "nc-47",
+      "title": "Diameter of Binary Tree",
+      "leetcode_url": "https://leetcode.com/problems/diameter-of-binary-tree/",
+      "difficulty": "Easy",
+      "topic": "Trees",
+      "pattern": "Global Max Path Variable Update",
+      "concepts": ["tree_recursion_state"],
+      "prerequisite_ids": ["nc-46"],
+      "similar_ids": ["nc-48"]
+    },
+    {
+      "id": "nc-48",
+      "title": "Balanced Binary Tree",
+      "leetcode_url": "https://leetcode.com/problems/balanced-binary-tree/",
+      "difficulty": "Easy",
+      "topic": "Trees",
+      "pattern": "Bottom-up Height Check with -1 Sentinel",
+      "concepts": ["tree_recursion_state"],
+      "prerequisite_ids": ["nc-46"],
+      "similar_ids": ["nc-49"]
+    },
+    {
+      "id": "nc-49",
+      "title": "Same Tree",
+      "leetcode_url": "https://leetcode.com/problems/same-tree/",
+      "difficulty": "Easy",
+      "topic": "Trees",
+      "pattern": "Simultaneous Structural Pre-Order Traversal",
+      "concepts": ["tree_recursion_state"],
+      "prerequisite_ids": ["nc-45"],
+      "similar_ids": ["nc-50"]
+    },
+    {
+      "id": "nc-50",
+      "title": "Subtree of Another Tree",
+      "leetcode_url": "https://leetcode.com/problems/subtree-of-another-tree/",
+      "difficulty": "Easy",
+      "topic": "Trees",
+      "pattern": "Tree Matching Helper Function",
+      "concepts": ["tree_recursion_state"],
+      "prerequisite_ids": ["nc-49"],
+      "similar_ids": ["nc-51"]
+    },
+    {
+      "id": "nc-51",
+      "title": "Lowest Common Ancestor of a Binary Search Tree",
+      "leetcode_url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
+      "difficulty": "Medium",
+      "topic": "Trees",
+      "pattern": "BST Property Range Split Traversal",
+      "concepts": ["bst_property_validation"],
+      "prerequisite_ids": ["nc-45"],
+      "similar_ids": ["nc-52"]
+    },
+    {
+      "id": "nc-52",
+      "title": "Binary Tree Level Order Traversal",
+      "leetcode_url": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
+      "difficulty": "Medium",
+      "topic": "Trees",
+      "pattern": "Queue-driven Level-by-Level BFS",
+      "concepts": ["graph_bfs_shortest_path", "tree_recursion_state"],
+      "prerequisite_ids": ["nc-45"],
+      "similar_ids": ["nc-53"]
+    },
+    {
+      "id": "nc-53",
+      "title": "Validate Binary Search Tree",
+      "leetcode_url": "https://leetcode.com/problems/validate-binary-search-tree/",
+      "difficulty": "Medium",
+      "topic": "Trees",
+      "pattern": "Recursive Min/Max Range Constraint Validation",
+      "concepts": ["bst_property_validation"],
+      "prerequisite_ids": ["nc-51"],
+      "similar_ids": ["nc-54"]
+    },
+    {
+      "id": "nc-54",
+      "title": "Kth Smallest Element in a BST",
+      "leetcode_url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
+      "difficulty": "Medium",
+      "topic": "Trees",
+      "pattern": "In-Order Traversal Count Collector",
+      "concepts": ["bst_property_validation"],
+      "prerequisite_ids": ["nc-53"],
+      "similar_ids": ["nc-55"]
+    },
+    {
+      "id": "nc-55",
+      "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+      "leetcode_url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+      "difficulty": "Medium",
+      "topic": "Trees",
+      "pattern": "Preorder Root Isolation + Inorder Subtree Partition",
+      "concepts": ["tree_recursion_state", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-45"],
+      "similar_ids": ["nc-56"]
+    },
+    {
+      "id": "nc-56",
+      "title": "Binary Tree Maximum Path Sum",
+      "leetcode_url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+      "difficulty": "Hard",
+      "topic": "Trees",
+      "pattern": "Post-Order Max Branch Return vs Combined Subtree Update",
+      "concepts": ["tree_recursion_state"],
+      "prerequisite_ids": ["nc-47"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-57",
+      "title": "Implement Trie Prefix Tree",
+      "leetcode_url": "https://leetcode.com/problems/implement-trie-prefix-tree/",
+      "difficulty": "Medium",
+      "topic": "Tries",
+      "pattern": "Nested TrieNode Children Pointer Array",
+      "concepts": ["trie_prefix_matching"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-58"]
+    },
+    {
+      "id": "nc-58",
+      "title": "Design Add and Search Words Data Structure",
+      "leetcode_url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+      "difficulty": "Medium",
+      "topic": "Tries",
+      "pattern": "Trie Traversal + Wildcard DFS Backtracking",
+      "concepts": ["trie_prefix_matching", "backtracking_state_pruning"],
+      "prerequisite_ids": ["nc-57"],
+      "similar_ids": ["nc-59"]
+    },
+    {
+      "id": "nc-59",
+      "title": "Word Search II",
+      "leetcode_url": "https://leetcode.com/problems/word-search-ii/",
+      "difficulty": "Hard",
+      "topic": "Tries",
+      "pattern": "Grid DFS Backtracking + Trie Prefix Pruning",
+      "concepts": ["trie_prefix_matching", "backtracking_state_pruning", "graph_dfs_cycle_detection"],
+      "prerequisite_ids": ["nc-58", "nc-71"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-60",
+      "title": "Kth Largest Element in a Stream",
+      "leetcode_url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
+      "difficulty": "Easy",
+      "topic": "Heap / Priority Queue",
+      "pattern": "Min-Heap of Constant Size K",
+      "concepts": ["heap_top_k_tracking"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-61"]
+    },
+    {
+      "id": "nc-61",
+      "title": "Last Stone Weight",
+      "leetcode_url": "https://leetcode.com/problems/last-stone-weight/",
+      "difficulty": "Easy",
+      "topic": "Heap / Priority Queue",
+      "pattern": "Max-Heap Continuous Pop & Push Simulation",
+      "concepts": ["heap_top_k_tracking"],
+      "prerequisite_ids": ["nc-60"],
+      "similar_ids": ["nc-62"]
+    },
+    {
+      "id": "nc-62",
+      "title": "K Closest Points to Origin",
+      "leetcode_url": "https://leetcode.com/problems/k-closest-points-to-origin/",
+      "difficulty": "Medium",
+      "topic": "Heap / Priority Queue",
+      "pattern": "Max-Heap Size K vs QuickSelect",
+      "concepts": ["heap_top_k_tracking"],
+      "prerequisite_ids": ["nc-60"],
+      "similar_ids": ["nc-63"]
+    },
+    {
+      "id": "nc-63",
+      "title": "Kth Largest Element in an Array",
+      "leetcode_url": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
+      "difficulty": "Medium",
+      "topic": "Heap / Priority Queue",
+      "pattern": "Min-Heap Size K / QuickSelect Partitioning",
+      "concepts": ["heap_top_k_tracking"],
+      "prerequisite_ids": ["nc-62"],
+      "similar_ids": ["nc-64"]
+    },
+    {
+      "id": "nc-64",
+      "title": "Task Scheduler",
+      "leetcode_url": "https://leetcode.com/problems/task-scheduler/",
+      "difficulty": "Medium",
+      "topic": "Heap / Priority Queue",
+      "pattern": "Max-Heap Frequency + Cooldown Queue",
+      "concepts": ["heap_top_k_tracking", "greedy_choice_property"],
+      "prerequisite_ids": ["nc-61"],
+      "similar_ids": ["nc-65"]
+    },
+    {
+      "id": "nc-65",
+      "title": "Design Twitter",
+      "leetcode_url": "https://leetcode.com/problems/design-twitter/",
+      "difficulty": "Medium",
+      "topic": "Heap / Priority Queue",
+      "pattern": "Max-Heap Multi-Feed K-Way Merge",
+      "concepts": ["heap_top_k_tracking", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-63"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-66",
+      "title": "Subsets",
+      "leetcode_url": "https://leetcode.com/problems/subsets/",
+      "difficulty": "Medium",
+      "topic": "Backtracking",
+      "pattern": "Include/Exclude Decision Tree Traversal",
+      "concepts": ["backtracking_state_pruning"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-67"]
+    },
+    {
+      "id": "nc-67",
+      "title": "Combination Sum",
+      "leetcode_url": "https://leetcode.com/problems/combination-sum/",
+      "difficulty": "Medium",
+      "topic": "Backtracking",
+      "pattern": "Unbounded Reuse Choice Tree with Target Subtraction",
+      "concepts": ["backtracking_state_pruning"],
+      "prerequisite_ids": ["nc-66"],
+      "similar_ids": ["nc-68"]
+    },
+    {
+      "id": "nc-68",
+      "title": "Permutations",
+      "leetcode_url": "https://leetcode.com/problems/permutations/",
+      "difficulty": "Medium",
+      "topic": "Backtracking",
+      "pattern": "Visited Track Array Permutation Choice",
+      "concepts": ["backtracking_state_pruning"],
+      "prerequisite_ids": ["nc-66"],
+      "similar_ids": ["nc-69"]
+    },
+    {
+      "id": "nc-69",
+      "title": "Subsets II",
+      "leetcode_url": "https://leetcode.com/problems/subsets-ii/",
+      "difficulty": "Medium",
+      "topic": "Backtracking",
+      "pattern": "Sorted Array Duplicate Choice Skip Pruning",
+      "concepts": ["backtracking_state_pruning"],
+      "prerequisite_ids": ["nc-66"],
+      "similar_ids": ["nc-70"]
+    },
+    {
+      "id": "nc-70",
+      "title": "Combination Sum II",
+      "leetcode_url": "https://leetcode.com/problems/combination-sum-ii/",
+      "difficulty": "Medium",
+      "topic": "Backtracking",
+      "pattern": "Single Use + Duplicate Neighbor Skip Pruning",
+      "concepts": ["backtracking_state_pruning"],
+      "prerequisite_ids": ["nc-67", "nc-69"],
+      "similar_ids": ["nc-71"]
+    },
+    {
+      "id": "nc-71",
+      "title": "Word Search",
+      "leetcode_url": "https://leetcode.com/problems/word-search/",
+      "difficulty": "Medium",
+      "topic": "Backtracking",
+      "pattern": "Grid 4-Directional DFS with Visited Cell Backtracking",
+      "concepts": ["backtracking_state_pruning", "graph_dfs_cycle_detection"],
+      "prerequisite_ids": ["nc-66"],
+      "similar_ids": ["nc-72"]
+    },
+    {
+      "id": "nc-72",
+      "title": "Palindrome Partitioning",
+      "leetcode_url": "https://leetcode.com/problems/palindrome-partitioning/",
+      "difficulty": "Medium",
+      "topic": "Backtracking",
+      "pattern": "Substring Sub-Palindrome Verification Backtracking",
+      "concepts": ["backtracking_state_pruning", "two_pointer_opposite"],
+      "prerequisite_ids": ["nc-10", "nc-66"],
+      "similar_ids": ["nc-73"]
+    },
+    {
+      "id": "nc-73",
+      "title": "Letter Combinations of a Phone Number",
+      "leetcode_url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
+      "difficulty": "Medium",
+      "topic": "Backtracking",
+      "pattern": "Digit Mapping Product Backtracking",
+      "concepts": ["backtracking_state_pruning"],
+      "prerequisite_ids": ["nc-66"],
+      "similar_ids": ["nc-74"]
+    },
+    {
+      "id": "nc-74",
+      "title": "N Queens",
+      "leetcode_url": "https://leetcode.com/problems/n-queens/",
+      "difficulty": "Hard",
+      "topic": "Backtracking",
+      "pattern": "Diagonal & Column Threat HashSet Pruning",
+      "concepts": ["backtracking_state_pruning", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-68", "nc-70"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-75",
+      "title": "Number of Islands",
+      "leetcode_url": "https://leetcode.com/problems/number-of-islands/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "Grid 4-Directional DFS/BFS Connected Component Flood Fill",
+      "concepts": ["graph_dfs_cycle_detection", "graph_bfs_shortest_path"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-76"]
+    },
+    {
+      "id": "nc-76",
+      "title": "Max Area of Island",
+      "leetcode_url": "https://leetcode.com/problems/max-area-of-island/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "DFS Grid Cell Accumulation",
+      "concepts": ["graph_dfs_cycle_detection"],
+      "prerequisite_ids": ["nc-75"],
+      "similar_ids": ["nc-77"]
+    },
+    {
+      "id": "nc-77",
+      "title": "Clone Graph",
+      "leetcode_url": "https://leetcode.com/problems/clone-graph/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "DFS/BFS Graph Traversal + HashMap Node Mapping",
+      "concepts": ["graph_dfs_cycle_detection", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-75"],
+      "similar_ids": ["nc-78"]
+    },
+    {
+      "id": "nc-78",
+      "title": "Walls and Gates",
+      "leetcode_url": "https://leetcode.com/problems/walls-and-gates/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "Multi-Source BFS Grid Distance Fill",
+      "concepts": ["graph_bfs_shortest_path"],
+      "prerequisite_ids": ["nc-75"],
+      "similar_ids": ["nc-79"]
+    },
+    {
+      "id": "nc-79",
+      "title": "Rotting Oranges",
+      "leetcode_url": "https://leetcode.com/problems/rotting-oranges/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "Multi-Source BFS Minute Level Traversal",
+      "concepts": ["graph_bfs_shortest_path"],
+      "prerequisite_ids": ["nc-78"],
+      "similar_ids": ["nc-80"]
+    },
+    {
+      "id": "nc-80",
+      "title": "Pacific Atlantic Water Flow",
+      "leetcode_url": "https://leetcode.com/problems/pacific-atlantic-water-flow/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "Dual Ocean Boundary Reverse DFS Intersection",
+      "concepts": ["graph_dfs_cycle_detection"],
+      "prerequisite_ids": ["nc-75"],
+      "similar_ids": ["nc-81"]
+    },
+    {
+      "id": "nc-81",
+      "title": "Surrounded Regions",
+      "leetcode_url": "https://leetcode.com/problems/surrounded-regions/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "Boundary Connected DFS Uncaptured Marking",
+      "concepts": ["graph_dfs_cycle_detection"],
+      "prerequisite_ids": ["nc-75"],
+      "similar_ids": ["nc-82"]
+    },
+    {
+      "id": "nc-82",
+      "title": "Course Schedule",
+      "leetcode_url": "https://leetcode.com/problems/course-schedule/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "Directed Graph Cycle Detection / Topological Indegree",
+      "concepts": ["graph_dfs_cycle_detection", "topological_sort_indegree"],
+      "prerequisite_ids": ["nc-75"],
+      "similar_ids": ["nc-83"]
+    },
+    {
+      "id": "nc-83",
+      "title": "Course Schedule II",
+      "leetcode_url": "https://leetcode.com/problems/course-schedule-ii/",
+      "difficulty": "Medium",
+      "topic": "Graphs",
+      "pattern": "Kahn's BFS Indegree Queue Order Output",
+      "concepts": ["topological_sort_indegree"],
+      "prerequisite_ids": ["nc-82"],
+      "similar_ids": ["nc-84"]
+    },
+    {
+      "id": "nc-84",
+      "title": "Graph Valid Tree",
+      "leetcode_url": "https://leetcode.com/problems/graph-valid-tree/",
+      "difficulty": "Medium",
+      "topic": "Advanced Graphs",
+      "pattern": "Union-Find Component Count + Edge Count Verification",
+      "concepts": ["union_find_connected_components", "graph_dfs_cycle_detection"],
+      "prerequisite_ids": ["nc-75"],
+      "similar_ids": ["nc-85"]
+    },
+    {
+      "id": "nc-85",
+      "title": "Number of Connected Components in an Undirected Graph",
+      "leetcode_url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+      "difficulty": "Medium",
+      "topic": "Advanced Graphs",
+      "pattern": "Union-Find Component Count Reduction",
+      "concepts": ["union_find_connected_components"],
+      "prerequisite_ids": ["nc-84"],
+      "similar_ids": ["nc-86"]
+    },
+    {
+      "id": "nc-86",
+      "title": "Redundant Connection",
+      "leetcode_url": "https://leetcode.com/problems/redundant-connection/",
+      "difficulty": "Medium",
+      "topic": "Advanced Graphs",
+      "pattern": "Union-Find Cycle Creating Edge Isolation",
+      "concepts": ["union_find_connected_components"],
+      "prerequisite_ids": ["nc-84"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-87",
+      "title": "Climbing Stairs",
+      "leetcode_url": "https://leetcode.com/problems/climbing-stairs/",
+      "difficulty": "Easy",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Fibonacci Linear Recurrence",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-88"]
+    },
+    {
+      "id": "nc-88",
+      "title": "Min Cost Climbing Stairs",
+      "leetcode_url": "https://leetcode.com/problems/min-cost-climbing-stairs/",
+      "difficulty": "Easy",
+      "topic": "1D Dynamic Programming",
+      "pattern": "1D Tabulation Step Minimum Choice",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-87"],
+      "similar_ids": ["nc-89"]
+    },
+    {
+      "id": "nc-89",
+      "title": "House Robber",
+      "leetcode_url": "https://leetcode.com/problems/house-robber/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Include vs Exclude Subproblem Recurrence",
+      "concepts": ["dp_state_definition", "dp_state_transition", "dp_overlapping_subproblems"],
+      "prerequisite_ids": ["nc-87"],
+      "similar_ids": ["nc-90"]
+    },
+    {
+      "id": "nc-90",
+      "title": "House Robber II",
+      "leetcode_url": "https://leetcode.com/problems/house-robber-ii/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Circular Array Dual 1D Pass Split",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-89"],
+      "similar_ids": ["nc-91"]
+    },
+    {
+      "id": "nc-91",
+      "title": "Longest Palindromic Substring",
+      "leetcode_url": "https://leetcode.com/problems/longest-palindromic-substring/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Expand Around Center vs 2D Interval DP",
+      "concepts": ["two_pointer_opposite", "dp_state_transition"],
+      "prerequisite_ids": ["nc-10"],
+      "similar_ids": ["nc-92"]
+    },
+    {
+      "id": "nc-92",
+      "title": "Palindromic Substrings",
+      "leetcode_url": "https://leetcode.com/problems/palindromic-substrings/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Expand Around Center Palindrome Count",
+      "concepts": ["two_pointer_opposite", "dp_state_transition"],
+      "prerequisite_ids": ["nc-91"],
+      "similar_ids": ["nc-93"]
+    },
+    {
+      "id": "nc-93",
+      "title": "Decode Ways",
+      "leetcode_url": "https://leetcode.com/problems/decode-ways/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Single vs Dual Digit Valid Prefix Transition",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-87"],
+      "similar_ids": ["nc-94"]
+    },
+    {
+      "id": "nc-94",
+      "title": "Coin Change",
+      "leetcode_url": "https://leetcode.com/problems/coin-change/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Unbounded Knapsack Target Minimum Transition",
+      "concepts": ["dp_state_definition", "dp_state_transition", "dp_overlapping_subproblems"],
+      "prerequisite_ids": ["nc-87"],
+      "similar_ids": ["nc-95"]
+    },
+    {
+      "id": "nc-95",
+      "title": "Maximum Product Subarray",
+      "leetcode_url": "https://leetcode.com/problems/maximum-product-subarray/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Dual Min/Max Variable Product Tracking",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-89"],
+      "similar_ids": ["nc-96"]
+    },
+    {
+      "id": "nc-96",
+      "title": "Word Break",
+      "leetcode_url": "https://leetcode.com/problems/word-break/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "1D Boolean Prefix Match Transition",
+      "concepts": ["dp_state_definition", "dp_state_transition", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-93"],
+      "similar_ids": ["nc-97"]
+    },
+    {
+      "id": "nc-97",
+      "title": "Longest Increasing Subsequence",
+      "leetcode_url": "https://leetcode.com/problems/longest-increasing-subsequence/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "Nested Loop LIS vs Binary Search Patient Sorting",
+      "concepts": ["dp_state_definition", "dp_state_transition", "binary_search_monotonicity"],
+      "prerequisite_ids": ["nc-87"],
+      "similar_ids": ["nc-98"]
+    },
+    {
+      "id": "nc-98",
+      "title": "Partition Equal Subset Sum",
+      "leetcode_url": "https://leetcode.com/problems/partition-equal-subset-sum/",
+      "difficulty": "Medium",
+      "topic": "1D Dynamic Programming",
+      "pattern": "0/1 Knapsack Target Boolean Subset Sum",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-94"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-99",
+      "title": "Unique Paths",
+      "leetcode_url": "https://leetcode.com/problems/unique-paths/",
+      "difficulty": "Medium",
+      "topic": "2D Dynamic Programming",
+      "pattern": "2D Grid Top-Left to Bottom-Right Path Sum",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-87"],
+      "similar_ids": ["nc-100"]
+    },
+    {
+      "id": "nc-100",
+      "title": "Longest Common Subsequence",
+      "leetcode_url": "https://leetcode.com/problems/longest-common-subsequence/",
+      "difficulty": "Medium",
+      "topic": "2D Dynamic Programming",
+      "pattern": "2D Matrix Character Match Diagonal vs Max Transition",
+      "concepts": ["dp_state_definition", "dp_state_transition", "dp_overlapping_subproblems"],
+      "prerequisite_ids": ["nc-99"],
+      "similar_ids": ["nc-101"]
+    },
+    {
+      "id": "nc-101",
+      "title": "Best Time to Buy and Sell Stock with Cooldown",
+      "leetcode_url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/",
+      "difficulty": "Medium",
+      "topic": "2D Dynamic Programming",
+      "pattern": "State Machine Transitions (Buying, Selling, Cooldown)",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-15", "nc-89"],
+      "similar_ids": ["nc-102"]
+    },
+    {
+      "id": "nc-102",
+      "title": "Coin Change II",
+      "leetcode_url": "https://leetcode.com/problems/coin-change-2/",
+      "difficulty": "Medium",
+      "topic": "2D Dynamic Programming",
+      "pattern": "Unbounded Knapsack Combination Count 2D DP",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-94"],
+      "similar_ids": ["nc-103"]
+    },
+    {
+      "id": "nc-103",
+      "title": "Target Sum",
+      "leetcode_url": "https://leetcode.com/problems/target-sum/",
+      "difficulty": "Medium",
+      "topic": "2D Dynamic Programming",
+      "pattern": "Subset Sum Transformation 2D DP Memoization",
+      "concepts": ["dp_state_definition", "dp_state_transition", "dp_overlapping_subproblems"],
+      "prerequisite_ids": ["nc-98"],
+      "similar_ids": ["nc-104"]
+    },
+    {
+      "id": "nc-104",
+      "title": "Interleaving String",
+      "leetcode_url": "https://leetcode.com/problems/interleaving-string/",
+      "difficulty": "Medium",
+      "topic": "2D Dynamic Programming",
+      "pattern": "2D Boolean Grid Double Pointer Match",
+      "concepts": ["dp_state_definition", "dp_state_transition"],
+      "prerequisite_ids": ["nc-100"],
+      "similar_ids": ["nc-105"]
+    },
+    {
+      "id": "nc-105",
+      "title": "Edit Distance",
+      "leetcode_url": "https://leetcode.com/problems/edit-distance/",
+      "difficulty": "Medium",
+      "topic": "2D Dynamic Programming",
+      "pattern": "2D Matrix Insert, Delete, Replace Cost Min Transition",
+      "concepts": ["dp_state_definition", "dp_state_transition", "dp_overlapping_subproblems"],
+      "prerequisite_ids": ["nc-100"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-106",
+      "title": "Maximum Subarray",
+      "leetcode_url": "https://leetcode.com/problems/maximum-subarray/",
+      "difficulty": "Medium",
+      "topic": "Greedy",
+      "pattern": "Kadane's Algorithm Dynamic Reset",
+      "concepts": ["greedy_choice_property", "dp_state_transition"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-107"]
+    },
+    {
+      "id": "nc-107",
+      "title": "Jump Game",
+      "leetcode_url": "https://leetcode.com/problems/jump-game/",
+      "difficulty": "Medium",
+      "topic": "Greedy",
+      "pattern": "Farthest Reachable Index Propagation",
+      "concepts": ["greedy_choice_property"],
+      "prerequisite_ids": ["nc-106"],
+      "similar_ids": ["nc-108"]
+    },
+    {
+      "id": "nc-108",
+      "title": "Jump Game II",
+      "leetcode_url": "https://leetcode.com/problems/jump-game-ii/",
+      "difficulty": "Medium",
+      "topic": "Greedy",
+      "pattern": "BFS Level End Max Reach Jump Counter",
+      "concepts": ["greedy_choice_property"],
+      "prerequisite_ids": ["nc-107"],
+      "similar_ids": ["nc-109"]
+    },
+    {
+      "id": "nc-109",
+      "title": "Gas Station",
+      "leetcode_url": "https://leetcode.com/problems/gas-station/",
+      "difficulty": "Medium",
+      "topic": "Greedy",
+      "pattern": "Total Surplus Check + Reset Starting Index",
+      "concepts": ["greedy_choice_property"],
+      "prerequisite_ids": ["nc-106"],
+      "similar_ids": ["nc-110"]
+    },
+    {
+      "id": "nc-110",
+      "title": "Hand of Straights",
+      "leetcode_url": "https://leetcode.com/problems/hand-of-straights/",
+      "difficulty": "Medium",
+      "topic": "Greedy",
+      "pattern": "TreeMap / Min Element Consecutive Group Removal",
+      "concepts": ["greedy_choice_property", "hash_frequency_map"],
+      "prerequisite_ids": ["nc-1"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-111",
+      "title": "Insert Interval",
+      "leetcode_url": "https://leetcode.com/problems/insert-interval/",
+      "difficulty": "Medium",
+      "topic": "Intervals",
+      "pattern": "Linear Pass Non-overlapping Placement",
+      "concepts": ["interval_overlap_sorting"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-112"]
+    },
+    {
+      "id": "nc-112",
+      "title": "Merge Intervals",
+      "leetcode_url": "https://leetcode.com/problems/merge-intervals/",
+      "difficulty": "Medium",
+      "topic": "Intervals",
+      "pattern": "Sort by Start Time + Overlap Comparison",
+      "concepts": ["interval_overlap_sorting"],
+      "prerequisite_ids": ["nc-111"],
+      "similar_ids": ["nc-113"]
+    },
+    {
+      "id": "nc-113",
+      "title": "Non-overlapping Intervals",
+      "leetcode_url": "https://leetcode.com/problems/non-overlapping-intervals/",
+      "difficulty": "Medium",
+      "topic": "Intervals",
+      "pattern": "Sort by End Time + Greedy Earliest End Choice",
+      "concepts": ["interval_overlap_sorting", "greedy_choice_property"],
+      "prerequisite_ids": ["nc-112"],
+      "similar_ids": ["nc-114"]
+    },
+    {
+      "id": "nc-114",
+      "title": "Meeting Rooms",
+      "leetcode_url": "https://leetcode.com/problems/meeting-rooms/",
+      "difficulty": "Easy",
+      "topic": "Intervals",
+      "pattern": "Sort & Adjacent Overlap Check",
+      "concepts": ["interval_overlap_sorting"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-115"]
+    },
+    {
+      "id": "nc-115",
+      "title": "Meeting Rooms II",
+      "leetcode_url": "https://leetcode.com/problems/meeting-rooms-ii/",
+      "difficulty": "Medium",
+      "topic": "Intervals",
+      "pattern": "Min-Heap End Time Tracking / Two Pointers Chromatic Sweep",
+      "concepts": ["interval_overlap_sorting", "heap_top_k_tracking"],
+      "prerequisite_ids": ["nc-114"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-116",
+      "title": "Rotate Image",
+      "leetcode_url": "https://leetcode.com/problems/rotate-image/",
+      "difficulty": "Medium",
+      "topic": "Math & Geometry",
+      "pattern": "Transpose Matrix + Reverse Rows",
+      "concepts": ["matrix_in_place_transform"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-117"]
+    },
+    {
+      "id": "nc-117",
+      "title": "Spiral Matrix",
+      "leetcode_url": "https://leetcode.com/problems/spiral-matrix/",
+      "difficulty": "Medium",
+      "topic": "Math & Geometry",
+      "pattern": "4-Boundary Inward Shrinking Simulation",
+      "concepts": ["matrix_in_place_transform"],
+      "prerequisite_ids": ["nc-116"],
+      "similar_ids": ["nc-118"]
+    },
+    {
+      "id": "nc-118",
+      "title": "Set Matrix Zeroes",
+      "leetcode_url": "https://leetcode.com/problems/set-matrix-zeroes/",
+      "difficulty": "Medium",
+      "topic": "Math & Geometry",
+      "pattern": "First Row & Column Marker Flag Invariant",
+      "concepts": ["matrix_in_place_transform"],
+      "prerequisite_ids": ["nc-116"],
+      "similar_ids": []
+    },
+    {
+      "id": "nc-119",
+      "title": "Single Number",
+      "leetcode_url": "https://leetcode.com/problems/single-number/",
+      "difficulty": "Easy",
+      "topic": "Bit Manipulation",
+      "pattern": "XOR Cancellation",
+      "concepts": ["bit_manipulation_xor"],
+      "prerequisite_ids": [],
+      "similar_ids": ["nc-120"]
+    },
+    {
+      "id": "nc-120",
+      "title": "Number of 1 Bits",
+      "leetcode_url": "https://leetcode.com/problems/number-of-1-bits/",
+      "difficulty": "Easy",
+      "topic": "Bit Manipulation",
+      "pattern": "n & (n - 1) Lowest Bit Clear Trick",
+      "concepts": ["bit_manipulation_xor"],
+      "prerequisite_ids": ["nc-119"],
+      "similar_ids": ["nc-121"]
+    },
+    {
+      "id": "nc-121",
+      "title": "Counting Bits",
+      "leetcode_url": "https://leetcode.com/problems/counting-bits/",
+      "difficulty": "Easy",
+      "topic": "Bit Manipulation",
+      "pattern": "dp[i] = dp[i >> 1] + (i & 1) Bit Recurrence",
+      "concepts": ["bit_manipulation_xor", "dp_state_transition"],
+      "prerequisite_ids": ["nc-120"],
+      "similar_ids": ["nc-122"]
+    },
+    {
+      "id": "nc-122",
+      "title": "Reverse Bits",
+      "leetcode_url": "https://leetcode.com/problems/reverse-bits/",
+      "difficulty": "Easy",
+      "topic": "Bit Manipulation",
+      "pattern": "32-Iteration Shift & Bit Accumulation",
+      "concepts": ["bit_manipulation_xor"],
+      "prerequisite_ids": ["nc-119"],
+      "similar_ids": ["nc-123"]
+    },
+    {
+      "id": "nc-123",
+      "title": "Missing Number",
+      "leetcode_url": "https://leetcode.com/problems/missing-number/",
+      "difficulty": "Easy",
+      "topic": "Bit Manipulation",
+      "pattern": "Sum Formula Difference or Index XOR Cancellation",
+      "concepts": ["bit_manipulation_xor"],
+      "prerequisite_ids": ["nc-119"],
+      "similar_ids": []
+    }
+  ]
+}
