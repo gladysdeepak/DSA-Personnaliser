@@ -52,6 +52,29 @@ function initDb() {
         title, description, topic_tags, content='leetcode_problems', content_rowid='id'
       )`);
       db.run(`CREATE INDEX IF NOT EXISTS idx_lc_difficulty ON leetcode_problems(difficulty)`);
+      db.run(`CREATE TABLE IF NOT EXISTS leetcode_problem_edges (
+        source_id INTEGER NOT NULL,
+        target_id INTEGER NOT NULL,
+        relation TEXT NOT NULL DEFAULT 'similar_question',
+        PRIMARY KEY(source_id,target_id)
+      )`);
+      db.run('CREATE INDEX IF NOT EXISTS idx_lc_edges_target ON leetcode_problem_edges(target_id)');
+      db.run(`CREATE TABLE IF NOT EXISTS problem_embeddings (
+        problem_id INTEGER PRIMARY KEY,
+        model_name TEXT NOT NULL,
+        content_hash TEXT NOT NULL,
+        dimensions INTEGER NOT NULL,
+        vector_json TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`);
+      db.run(`CREATE TABLE IF NOT EXISTS leetcode_remediation_flags (
+        problem_id INTEGER PRIMARY KEY,
+        user_id TEXT NOT NULL DEFAULT 'local',
+        reason TEXT,
+        active INTEGER NOT NULL DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(problem_id) REFERENCES leetcode_problems(id)
+      )`);
 
       db.run(`CREATE TABLE IF NOT EXISTS agent_conversations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

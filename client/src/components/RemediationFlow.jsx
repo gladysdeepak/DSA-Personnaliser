@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { BookOpen, CheckCircle, ArrowRight, ArrowLeft, Target, Sparkles, ExternalLink, Lightbulb } from 'lucide-react';
+import { BookOpen, CheckCircle, ArrowRight, ArrowLeft, Target, Sparkles, ExternalLink, Lightbulb, Link2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import SimilarProblemGraph from './SimilarProblemGraph';
 
-export default function RemediationFlow({ conceptId, onLogAttempt, onBackToDashboard }) {
+export default function RemediationFlow({ conceptId, leetcodeProblemId, initialRecommendation, onLogAttempt, onBackToDashboard }) {
   const [recommendation, setRecommendation] = useState(null);
   const [activeStep, setActiveStep] = useState(1);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (initialRecommendation) {
+      setRecommendation(initialRecommendation);
+      setActiveStep(1);
+      setLoading(false);
+      return;
+    }
     fetchRecommendation();
-  }, [conceptId]);
+  }, [conceptId, leetcodeProblemId, initialRecommendation]);
 
   const fetchRecommendation = async () => {
     try {
       setLoading(true);
-      const url = conceptId ? `http://localhost:5001/api/recommendation?concept_id=${conceptId}` : 'http://localhost:5001/api/recommendation';
+      const url = leetcodeProblemId
+        ? `http://localhost:5001/api/leetcode/${leetcodeProblemId}/remediation`
+        : conceptId ? `http://localhost:5001/api/recommendation?concept_id=${conceptId}` : 'http://localhost:5001/api/recommendation';
       const res = await fetch(url);
       const data = await res.json();
-      setRecommendation(data);
+      setRecommendation(data.recommendation || data);
+      setActiveStep(1);
     } catch (err) {
       console.error('Failed to fetch recommendation sequence:', err);
     } finally {
@@ -81,6 +91,18 @@ export default function RemediationFlow({ conceptId, onLogAttempt, onBackToDashb
           </div>
         </div>
       </div>
+
+      {recommendation.source === 'leetcode.csv' && (
+        <div className="glass-card" style={{ padding: '16px 20px', borderColor: 'rgba(6, 182, 212, .25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--accent-cyan)', marginBottom: 10 }}>
+            <Link2 size={17} /><strong style={{ fontSize: '.9rem' }}>Similar-problem graph from leetcode.csv</strong>
+          </div>
+          <p style={{ fontSize: '.82rem', color: 'var(--text-muted)', marginBottom: 10 }}>
+            {recommendation.flagged_problem.title} connects to these related problems. The path below uses these edges for warm-up and transfer practice.
+          </p>
+          <SimilarProblemGraph problemId={recommendation.flagged_problem.id} />
+        </div>
+      )}
 
       {/* Step Stepper Tabs */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>

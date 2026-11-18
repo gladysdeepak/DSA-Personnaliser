@@ -6,12 +6,15 @@ const path = require('path');
 const { initDb, db } = require('./db');
 const { getFullGraph } = require('./services/graphService');
 const { handleNewAttempt, getDiagnosticInsights, getAlgorithmicProfile } = require('./services/diagnosisEngine');
-const { getPersonalizedRecommendation } = require('./services/recommender');
+const { getPersonalizedRecommendation, getCsvProblemRemediation } = require('./services/recommender');
 const { ingestCsv } = require('./services/leetcodeDataset');
 const { runLearningAgent } = require('./services/learningAgent');
+const { semanticSearch, getEmbeddingStatus } = require('./services/embeddingService');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const aiProvider = String(process.env.AI_PROVIDER || (process.env.GEMINI_API_KEY ? 'gemini' : 'openai')).toLowerCase();
+const aiConfigured = () => Boolean(aiProvider === 'gemini' ? process.env.GEMINI_API_KEY : process.env.OPENAI_API_KEY);
 
 app.use(cors());
 app.use(express.json());
@@ -161,6 +164,65 @@ app.get('/api/leetcode/:id', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+app.get('/api/leetcode/:id/similar', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const limit = Math.max(1, Math.min(50, Number.parseInt(req.query.limit, 10) || 20));
+    const source = await queryGet('SELECT id,title,similar_questions FROM leetcode_problems WHERE id=? AND active=1', [id]);
+    if (!source) return res.status(404).json({ error: 'LeetCode problem not found.' });
+    const similar = await queryAll(`SELECT p.id,p.title,p.difficulty,p.topic_tags,p.problem_url,e.relation
+      FROM leetcode_problem_edges e JOIN leetcode_problems p
+        ON p.id=CASE WHEN e.source_id=? THEN e.target_id ELSE e.source_id END
+      WHERE (e.source_id=? OR e.target_id=?) AND p.active=1 AND p.id<>?
+      GROUP BY p.id ORDER BY p.id LIMIT ?`, [id, id, id, id, limit]);
+    res.json({ problem_id: id, title: source.title, similar_questions: JSON.parse(source.similar_questions), nodes: similar.map((p) => ({
+      ...p, topic_tags: JSON.parse(p.topic_tags || '[]'), type: 'problem'
+    })), edges: similar.map((p) => ({ from: id, to: p.id, relation: p.relation })) });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/graph/leetcode/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const target = await queryGet('SELECT id,title,difficulty,topic_tags FROM leetcode_problems WHERE id=? AND active=1', [id]);
+    if (!target) return res.status(404).json({ error: 'LeetCode problem not found.' });
+    const similar = await queryAll(`SELECT p.id,p.title,p.difficulty,p.topic_tags,e.relation
+      FROM leetcode_problem_edges e JOIN leetcode_problems p
+        ON p.id=CASE WHEN e.source_id=? THEN e.target_id ELSE e.source_id END
+      WHERE (e.source_id=? OR e.target_id=?) AND p.active=1 AND p.id<>?
+      GROUP BY p.id`, [id, id, id, id]);
+    const nodes = [{ ...target, topic_tags: JSON.parse(target.topic_tags || '[]'), type: 'problem' },
+      ...similar.map((p) => ({ ...p, topic_tags: JSON.parse(p.topic_tags || '[]'), type: 'problem' }))];
+    const edges = similar.map((p) => ({ from: id, to: p.id, relation: p.relation }));
+    res.json({ nodes, edges, source: 'leetcode.csv' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leetcode/:id/remediation', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const userId = String(req.body.user_id || 'local').trim();
+    if (!Number.isInteger(id) || id <= 0) return res.status(400).json({ error: 'Invalid problem ID.' });
+    if (!/^[a-zA-Z0-9_-]{1,80}$/.test(userId)) return res.status(400).json({ error: 'Invalid user_id.' });
+    const recommendation = await getCsvProblemRemediation(id);
+    if (!recommendation) return res.status(404).json({ error: 'LeetCode problem not found.' });
+    await queryRun(`INSERT INTO leetcode_remediation_flags(problem_id,user_id,reason,active)
+      VALUES(?,?,?,1) ON CONFLICT(problem_id) DO UPDATE SET user_id=excluded.user_id,
+      reason=excluded.reason,active=1,created_at=CURRENT_TIMESTAMP`,
+    [id, userId, String(req.body.reason || 'Learner requested remediation').slice(0, 500)]);
+    res.json({ flagged: true, recommendation });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leetcode/:id/remediation', async (req, res) => {
+  try {
+    const recommendation = await getCsvProblemRemediation(Number(req.params.id));
+    if (!recommendation) return res.status(404).json({ error: 'LeetCode problem not found.' });
+    const flag = await queryGet('SELECT active,reason,created_at FROM leetcode_remediation_flags WHERE problem_id=?', [req.params.id]);
+    res.json({ flagged: Boolean(flag?.active), reason: flag?.reason || null, recommendation });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.post('/api/search/hybrid', async (req, res) => {
   try {
     const query = String(req.body.query || '').trim();
@@ -202,6 +264,29 @@ app.post('/api/search/hybrid', async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+app.get('/api/embeddings/status', async (_req, res) => {
+  try {
+    const status = await getEmbeddingStatus();
+    res.json({ ...status, configured: aiConfigured(), provider: aiProvider });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/search/semantic', async (req, res) => {
+  try {
+    const query = String(req.body.query || '').trim();
+    if (!query) return res.status(400).json({ error: 'query is required.' });
+    if (!aiConfigured()) return res.status(503).json({ code: 'embeddings_not_configured', error: `Set ${aiProvider === 'gemini' ? 'GEMINI_API_KEY' : 'OPENAI_API_KEY'} on the server to use embedding search.` });
+    const result = await semanticSearch(query, {
+      difficulty: String(req.body.difficulty || '').trim() || null,
+      topic: String(req.body.topic || '').trim() || null,
+      limit: Number.parseInt(req.body.limit, 10) || 10
+    });
+    res.json(result);
+  } catch (err) {
+    res.status(err.code === 'embeddings_not_ready' ? 409 : 502).json({ code: err.code || 'semantic_search_error', error: err.message });
+  }
+});
+
 app.get('/api/agent/history', async (req, res) => {
   try {
     const userId = String(req.query.user_id || 'local').trim();
@@ -212,7 +297,7 @@ app.get('/api/agent/history', async (req, res) => {
     ) ORDER BY id ASC`, [userId]);
     const goals = await queryAll(`SELECT id,goal,deadline,status,created_at FROM learning_goals
       WHERE user_id=? AND status='active' ORDER BY id DESC LIMIT 10`, [userId]);
-    res.json({ history, goals, configured: Boolean(process.env.OPENAI_API_KEY) });
+    res.json({ history, goals, configured: aiConfigured(), provider: aiProvider });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
@@ -232,9 +317,9 @@ app.post('/api/agent/chat', async (req, res) => {
     if (!/^[a-zA-Z0-9_-]{1,80}$/.test(userId)) return res.status(400).json({ error: 'Invalid user_id.' });
     if (!message) return res.status(400).json({ error: 'message is required.' });
     if (message.length > 3000) return res.status(400).json({ error: 'message must be 3,000 characters or fewer.' });
-    if (!process.env.OPENAI_API_KEY) return res.status(503).json({
+    if (!aiConfigured()) return res.status(503).json({
       code: 'agent_not_configured',
-      error: 'The learning agent needs OPENAI_API_KEY in the server environment.'
+      error: `The learning agent needs ${aiProvider === 'gemini' ? 'GEMINI_API_KEY' : 'OPENAI_API_KEY'} in the server environment.`
     });
     const history = await queryAll(`SELECT role,content FROM (
       SELECT role,content,id FROM agent_conversations WHERE user_id=?

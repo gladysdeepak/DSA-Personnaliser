@@ -67,6 +67,10 @@ function normalize(raw) {
   return normalized;
 }
 
+function titleKey(title) {
+  return String(title || '').replace(/^\s*\d+\s*[.):-]\s*/, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+}
+
 function run(db, sql, params = []) {
   return new Promise((resolve, reject) => db.run(sql, params, function (err) {
     if (err) reject(err); else resolve(this);
@@ -74,6 +78,12 @@ function run(db, sql, params = []) {
 }
 function get(db, sql, params = []) {
   return new Promise((resolve, reject) => db.get(sql, params, (err, row) => err ? reject(err) : resolve(row)));
+}
+function preparedRun(statement, params = []) {
+  return new Promise((resolve, reject) => statement.run(params, function (err) { err ? reject(err) : resolve(this); }));
+}
+function finalize(statement) {
+  return new Promise((resolve, reject) => statement.finalize((err) => err ? reject(err) : resolve()));
 }
 
 async function ingestCsv(db) {
@@ -130,6 +140,17 @@ async function ingestCsv(db) {
     // This is an external-content FTS5 table; rebuild its index from the
     // canonical table instead of issuing DELETE against the virtual table.
     await run(db, "INSERT INTO leetcode_problem_fts(leetcode_problem_fts) VALUES('rebuild')");
+    await run(db, 'DELETE FROM leetcode_problem_edges');
+    const titles = new Map(records.map((record) => [titleKey(record.title), record.id]));
+    const edge = db.prepare('INSERT OR IGNORE INTO leetcode_problem_edges(source_id,target_id,relation) VALUES(?,?,?)');
+    for (const record of records) {
+      for (const relatedTitle of record.similar_questions) {
+        const targetId = titles.get(titleKey(relatedTitle));
+        if (!targetId || targetId === record.id) continue;
+        await preparedRun(edge, [record.id, targetId, 'similar_question']);
+      }
+    }
+    await finalize(edge);
     await run(db, 'COMMIT');
   } catch (error) {
     await run(db, 'ROLLBACK');

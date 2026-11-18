@@ -13,11 +13,22 @@ import LearningAssistant from './components/LearningAssistant';
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [targetConceptId, setTargetConceptId] = useState(null);
+  const [leetcodeProblemId, setLeetcodeProblemId] = useState(null);
+  const [csvRemediationPlan, setCsvRemediationPlan] = useState(null);
   const [loggerProblem, setLoggerProblem] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const handleStartRemediation = (conceptId) => {
     setTargetConceptId(conceptId);
+    setLeetcodeProblemId(null);
+    setCsvRemediationPlan(null);
+    setActiveTab('remediation');
+  };
+
+  const handleCsvRemediation = (problemId, plan) => {
+    setTargetConceptId(null);
+    setLeetcodeProblemId(problemId);
+    setCsvRemediationPlan(plan);
     setActiveTab('remediation');
   };
 
@@ -137,7 +148,7 @@ export default function App() {
           />
         )}
 
-        {activeTab === 'search' && <LeetCodeSearch />}
+        {activeTab === 'search' && <LeetCodeSearch onStartRemediation={handleCsvRemediation} />}
 
         {activeTab === 'assistant' && <LearningAssistant />}
 
@@ -152,6 +163,8 @@ export default function App() {
           <RemediationFlow
             key={refreshKey}
             conceptId={targetConceptId}
+            leetcodeProblemId={leetcodeProblemId}
+            initialRecommendation={csvRemediationPlan}
             onLogAttempt={handleLogAttempt}
             onBackToDashboard={() => setActiveTab('dashboard')}
           />

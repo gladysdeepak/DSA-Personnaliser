@@ -8,6 +8,7 @@ const TOOL_LABELS = {
   search_problems: 'Searched the LeetCode dataset',
   get_attempt_history: 'Reviewed recent attempts',
   get_problem_details: 'Retrieved problem details',
+  get_similar_problem_path: 'Followed similar-problem graph links',
   get_personalized_plan: 'Built a four-step practice plan',
   save_learning_goal: 'Saved your learning goal'
 };

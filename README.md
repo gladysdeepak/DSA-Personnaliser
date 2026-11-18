@@ -143,5 +143,35 @@ npm run dev
 | `GET` | `/api/profile` | Fetch user algorithmic difficulty fingerprint summary |
 | `GET` | `/api/recommendation` | Fetch personalized 4-step remediation practice path |
 
+## LeetCode CSV retrieval and similar-problem remediation
+
+The root `leetcode.csv` is the primary problem corpus. Every valid-ID row remains eligible even when `problem_description` is empty; title, difficulty, topic tags, similar-question links, and the original fields are retained. The curated NeetCode 150 set remains for existing concept-to-problem diagnosis mappings. At startup, the backend upserts CSV rows by content hash, refreshes SQLite FTS5, and resolves similar-question titles into the `leetcode_problem_edges` graph.
+
+The LeetCode Search tab offers keyword and embedding search. Embeddings use OpenAI `text-embedding-3-small`, stored in SQLite at 256 dimensions. Configure `.env`, stop the development server, then build or update vectors with:
+
+```bash
+npm run embeddings:build
+```
+
+The importer embeds title, difficulty, topics, and similar-problem titles for every record, and includes the description when present. It skips unchanged vectors. Semantic search embeds the query and ranks vectors with cosine similarity; keyword search remains available as a fallback.
+
+When a CSV problem is flagged for remediation, the app follows its similar-question graph edges and creates a four-step practice path: review the target problem, warm up on a linked problem, retry the flagged problem, then test transfer on another linked problem. The existing concept-based remediation endpoint also resolves its practice problems against the CSV when IDs match.
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/search/semantic` | Embedding search with optional difficulty and topic filters |
+| `GET` | `/api/embeddings/status` | Current embedding count versus corpus size |
+| `GET` | `/api/leetcode/:id/similar` | Adjacent CSV problems and similarity edges |
+| `GET` | `/api/graph/leetcode/:id` | One-hop similarity graph for a CSV problem |
+| `POST` | `/api/leetcode/:id/remediation` | Flag a problem and return its graph-linked practice plan |
+
+## LangGraph learning assistant
+
+The AI Coach uses a LangGraph `StateGraph` with model, tool-execution, and finalization nodes. Available tools read the learner profile and diagnosis, search the CSV corpus semantically, inspect attempts and problem details, follow similar-problem edges, retrieve remediation plans, and save a goal when the learner asks. Conversations and goals persist in SQLite; recent conversation context and tool results are sent to the configured model API.
+
+Copy `.env.example` to `.env`, set `AI_PROVIDER=gemini` and `GEMINI_API_KEY` (Google AI Studio), run `npm run embeddings:build`, then start the app with `npm run dev`. Gemini uses `GEMINI_MODEL`, `GEMINI_EMBEDDING_MODEL`, and `GEMINI_EMBEDDING_DIMENSIONS`. To use OpenAI instead, set `AI_PROVIDER=openai` and `OPENAI_API_KEY`; the corresponding `OPENAI_*` model settings remain configurable. Without a key, keyword search still works, but semantic search and AI Coach replies are unavailable. Without a current embedding index, semantic search returns an actionable setup message. Keep provider keys in the server `.env` file and out of browser code.
+
+V1 attempt and diagnosis rows are still shared across this local workspace. Chat and saved-goal memory are separated by learner ID. PostgreSQL/pgvector, transformer embeddings, reranking, retrieval evaluation, and deployment remain later milestones; the current implementation uses SQLite and exact cosine ranking for this 3,000-row corpus.
+
 ---
 

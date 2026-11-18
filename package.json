@@ -7,13 +7,18 @@
     "server": "nodemon --ignore server/data/leetcode_quality_report.json server/index.js",
     "client": "npm --prefix client run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "embeddings:build": "node server/scripts/buildEmbeddings.js",
     "build": "npm --prefix client run build"
   },
   "dependencies": {
+    "@langchain/core": "^1.4.1",
+    "@langchain/langgraph": "^1.7.5",
+    "@langchain/openai": "^1.8.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
