@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -5,6 +7,8 @@ const { initDb, db } = require('./db');
 const { getFullGraph } = require('./services/graphService');
 const { handleNewAttempt, getDiagnosticInsights, getAlgorithmicProfile } = require('./services/diagnosisEngine');
 const { getPersonalizedRecommendation } = require('./services/recommender');
+const { ingestCsv } = require('./services/leetcodeDataset');
+const { runLearningAgent } = require('./services/learningAgent');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -128,6 +132,121 @@ app.get('/api/problems/:id', async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// CSV-backed retrieval corpus (separate from the NeetCode graph dataset).
+app.get('/api/dataset/status', async (_req, res) => {
+  try {
+    const row = await queryGet(`SELECT COUNT(*) AS count, SUM(has_description=0) AS missing_descriptions
+      FROM leetcode_problems WHERE active=1`);
+    res.json({ source: 'leetcode.csv', ...row });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/dataset/quality', async (_req, res) => {
+  try {
+    const fs = require('fs');
+    const reportPath = path.join(__dirname, 'data', 'leetcode_quality_report.json');
+    if (!fs.existsSync(reportPath)) return res.status(404).json({ error: 'Dataset quality report is not available yet.' });
+    res.json(JSON.parse(fs.readFileSync(reportPath, 'utf8')));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leetcode/:id', async (req, res) => {
+  try {
+    const problem = await queryGet('SELECT * FROM leetcode_problems WHERE id=? AND active=1', [req.params.id]);
+    if (!problem) return res.status(404).json({ error: 'LeetCode problem not found' });
+    res.json({ ...problem, topic_tags: JSON.parse(problem.topic_tags), similar_questions: JSON.parse(problem.similar_questions), raw_record: JSON.parse(problem.raw_record) });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/search/hybrid', async (req, res) => {
+  try {
+    const query = String(req.body.query || '').trim();
+    if (!query) return res.status(400).json({ error: 'query is required' });
+    const limit = Math.max(1, Math.min(50, Number.parseInt(req.body.limit, 10) || 10));
+    const difficulty = String(req.body.difficulty || '').trim();
+    const requestedTopics = Array.isArray(req.body.topics) ? req.body.topics.map((x) => String(x).toLowerCase()) : [];
+    const exactId = query.match(/^\s*(?:#|problem\s*)?(\d+)\s*$/i)?.[1];
+    if (exactId) {
+      const exact = await queryGet('SELECT * FROM leetcode_problems WHERE id=? AND active=1', [exactId]);
+      if (exact && (!difficulty || exact.difficulty?.toLowerCase() === difficulty.toLowerCase())) {
+        const result = { ...exact };
+        delete result.raw_record;
+        delete result.content_hash;
+        return res.json({ query, mode: 'exact_id', results: [{ ...result, topic_tags: JSON.parse(exact.topic_tags), similar_questions: JSON.parse(exact.similar_questions), score: 1 }] });
+      }
+    }
+    const terms = query.toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
+    if (!terms.length) return res.json({ query, mode: 'hybrid', results: [] });
+    const ftsQuery = [...new Set(terms)].map((term) => `"${term.replace(/"/g, '""')}"`).join(' OR ');
+    const candidates = await queryAll(`SELECT p.*, bm25(leetcode_problem_fts, 4.0, 1.0, 3.0) AS lexical_rank
+      FROM leetcode_problem_fts JOIN leetcode_problems p ON p.id=leetcode_problem_fts.rowid
+      WHERE leetcode_problem_fts MATCH ? AND p.active=1
+      ${difficulty ? 'AND lower(p.difficulty)=lower(?)' : ''}
+      ORDER BY lexical_rank LIMIT 250`, difficulty ? [ftsQuery, difficulty] : [ftsQuery]);
+    const scored = candidates.map((problem, index) => {
+      const result = { ...problem };
+      delete result.raw_record;
+      delete result.content_hash;
+      const tags = JSON.parse(problem.topic_tags);
+      const normTags = tags.map((tag) => tag.toLowerCase());
+      const topicMatches = requestedTopics.filter((topic) => normTags.some((tag) => tag.includes(topic) || topic.includes(tag))).length;
+      const tokenMatches = terms.reduce((sum, term) => sum + (normTags.some((tag) => tag.includes(term)) ? 1 : 0), 0);
+      const reciprocalRank = 1 / (60 + index + 1);
+      const score = reciprocalRank + topicMatches * 0.02 + tokenMatches * 0.005;
+      return { ...result, topic_tags: tags, similar_questions: JSON.parse(problem.similar_questions), score, topic_matches: topicMatches };
+    }).sort((a, b) => b.score - a.score).slice(0, limit);
+    res.json({ query, mode: 'hybrid_lexical', results: scored });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/agent/history', async (req, res) => {
+  try {
+    const userId = String(req.query.user_id || 'local').trim();
+    if (!/^[a-zA-Z0-9_-]{1,80}$/.test(userId)) return res.status(400).json({ error: 'Invalid user_id.' });
+    const history = await queryAll(`SELECT role,content,created_at FROM (
+      SELECT role,content,created_at,id FROM agent_conversations WHERE user_id=?
+      ORDER BY id DESC LIMIT 40
+    ) ORDER BY id ASC`, [userId]);
+    const goals = await queryAll(`SELECT id,goal,deadline,status,created_at FROM learning_goals
+      WHERE user_id=? AND status='active' ORDER BY id DESC LIMIT 10`, [userId]);
+    res.json({ history, goals, configured: Boolean(process.env.OPENAI_API_KEY) });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/agent/history', async (req, res) => {
+  try {
+    const userId = String(req.query.user_id || 'local').trim();
+    if (!/^[a-zA-Z0-9_-]{1,80}$/.test(userId)) return res.status(400).json({ error: 'Invalid user_id.' });
+    await queryRun('DELETE FROM agent_conversations WHERE user_id=?', [userId]);
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/agent/chat', async (req, res) => {
+  try {
+    const userId = String(req.body.user_id || 'local').trim();
+    const message = String(req.body.message || '').trim();
+    if (!/^[a-zA-Z0-9_-]{1,80}$/.test(userId)) return res.status(400).json({ error: 'Invalid user_id.' });
+    if (!message) return res.status(400).json({ error: 'message is required.' });
+    if (message.length > 3000) return res.status(400).json({ error: 'message must be 3,000 characters or fewer.' });
+    if (!process.env.OPENAI_API_KEY) return res.status(503).json({
+      code: 'agent_not_configured',
+      error: 'The learning agent needs OPENAI_API_KEY in the server environment.'
+    });
+    const history = await queryAll(`SELECT role,content FROM (
+      SELECT role,content,id FROM agent_conversations WHERE user_id=?
+      ORDER BY id DESC LIMIT 10
+    ) ORDER BY id ASC`, [userId]);
+    const result = await runLearningAgent({ userId, message, history });
+    await queryRun('INSERT INTO agent_conversations(user_id,role,content) VALUES(?,?,?)', [userId, 'user', message]);
+    await queryRun('INSERT INTO agent_conversations(user_id,role,content) VALUES(?,?,?)', [userId, 'assistant', result.answer]);
+    res.json(result);
+  } catch (err) {
+    console.error('Learning agent request failed:', err.message);
+    res.status(err.code === 'agent_not_configured' ? 503 : 502).json({ code: err.code || 'agent_error', error: err.message });
   }
 });
 

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Network, ListChecks, Brain, Target, Sparkles } from 'lucide-react';
+import './App.css';
+import { LayoutDashboard, Network, ListChecks, Brain, Target, Search, Sparkles } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import GraphExplorer from './components/GraphExplorer';
 import ProblemCatalog from './components/ProblemCatalog';
 import ConceptMasteryMatrix from './components/ConceptMasteryMatrix';
 import RemediationFlow from './components/RemediationFlow';
 import AttemptLoggerModal from './components/AttemptLoggerModal';
+import LeetCodeSearch from './components/LeetCodeSearch';
+import LearningAssistant from './components/LearningAssistant';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -75,6 +78,8 @@ export default function App() {
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'graph', label: 'Knowledge Graph', icon: Network },
             { id: 'catalog', label: 'NeetCode 150', icon: ListChecks },
+            { id: 'search', label: 'LeetCode Search', icon: Search },
+            { id: 'assistant', label: 'AI Coach', icon: Sparkles },
             { id: 'concepts', label: 'Concept Matrix', icon: Brain },
             { id: 'remediation', label: 'Remediation Path', icon: Target }
           ].map((tab) => {
@@ -131,6 +136,10 @@ export default function App() {
             onLogAttempt={handleLogAttempt}
           />
         )}
+
+        {activeTab === 'search' && <LeetCodeSearch />}
+
+        {activeTab === 'assistant' && <LearningAssistant />}
 
         {activeTab === 'concepts' && (
           <ConceptMasteryMatrix

@@ -22,6 +22,55 @@ function initDb() {
         )
       `);
 
+      // The larger LeetCode CSV corpus is kept separate from the hand-curated
+      // NeetCode graph so it can power retrieval without bloating graph views.
+      db.run(`
+        CREATE TABLE IF NOT EXISTS leetcode_problems (
+          id INTEGER PRIMARY KEY,
+          title TEXT NOT NULL,
+          description TEXT,
+          difficulty TEXT,
+          topic_tags TEXT NOT NULL DEFAULT '[]',
+          is_premium INTEGER NOT NULL DEFAULT 0,
+          similar_questions TEXT NOT NULL DEFAULT '[]',
+          acceptance REAL,
+          accepted INTEGER,
+          submission INTEGER,
+          likes INTEGER,
+          dislikes INTEGER,
+          discussion_count INTEGER,
+          problem_url TEXT,
+          solution_url TEXT,
+          content_hash TEXT NOT NULL,
+          raw_record TEXT NOT NULL,
+          has_description INTEGER NOT NULL DEFAULT 1,
+          active INTEGER NOT NULL DEFAULT 1,
+          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      db.run(`CREATE VIRTUAL TABLE IF NOT EXISTS leetcode_problem_fts USING fts5(
+        title, description, topic_tags, content='leetcode_problems', content_rowid='id'
+      )`);
+      db.run(`CREATE INDEX IF NOT EXISTS idx_lc_difficulty ON leetcode_problems(difficulty)`);
+
+      db.run(`CREATE TABLE IF NOT EXISTS agent_conversations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id TEXT NOT NULL,
+        role TEXT NOT NULL CHECK(role IN ('user','assistant')),
+        content TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`);
+      db.run('CREATE INDEX IF NOT EXISTS idx_agent_conversation_user ON agent_conversations(user_id, id DESC)');
+      db.run(`CREATE TABLE IF NOT EXISTS learning_goals (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id TEXT NOT NULL,
+        goal TEXT NOT NULL,
+        deadline TEXT,
+        status TEXT NOT NULL DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`);
+      db.run('CREATE INDEX IF NOT EXISTS idx_learning_goals_user ON learning_goals(user_id, status, id DESC)');
+
       // 2. Concepts table
       db.run(`
         CREATE TABLE IF NOT EXISTS concepts (
@@ -78,11 +127,9 @@ function initDb() {
       // Seed data if empty
       db.get('SELECT COUNT(*) as count FROM problems', (err, row) => {
         if (err) return reject(err);
-        if (row.count === 0) {
-          seedInitialData().then(resolve).catch(reject);
-        } else {
-          resolve();
-        }
+        const seed = row.count === 0 ? seedInitialData() : Promise.resolve();
+        seed.then(() => require('./services/leetcodeDataset').ingestCsv(db))
+          .then(resolve).catch(reject);
       });
     });
   });

@@ -4,7 +4,7 @@
   "description": "Personalized DSA Learning & Concept Diagnosis Platform",
   "main": "server/index.js",
   "scripts": {
-    "server": "nodemon server/index.js",
+    "server": "nodemon --ignore server/data/leetcode_quality_report.json server/index.js",
     "client": "npm --prefix client run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "npm --prefix client run build"
